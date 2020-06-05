@@ -14,13 +14,15 @@ spec:
         app: mongo
     spec:
       containers:
-      - name: mongo
-        image: mongo
-        env:
-        - name: DATABASE_USERNAME
-          value: strapi
-        - name: DATABASE_PASSWORD
-          value: strapi
-        ports:
-        - containerPort: 27017
-        name: mongo
+        - name: mongo
+          image: mongo
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: strapi
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: strapi
+          ports:
+            - containerPort: 27017
+              name: mongo
+              protocol: TCP

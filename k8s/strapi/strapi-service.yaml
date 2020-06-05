@@ -6,7 +6,7 @@ metadata:
   labels:
     app: strapi
 spec:
-  #type: LoadBalancer
+  type: NodePort
   ports:
   - port: 1337
     #targetPort: 80

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strapi-svc
+  labels:
+    app: strapi
+spec:
+  #type: LoadBalancer
+  ports:
+  - port: 1337
+    #targetPort: 80
+    #protocol: TCP
+    name: strapi
+  selector:
+    app: strapi

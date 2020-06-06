@@ -6,7 +6,7 @@ metadata:
   labels:
     app: strapi
 spec:
-  type: ClusterIP
+
   ports:
   - port: 1337
     targetPort: 1337

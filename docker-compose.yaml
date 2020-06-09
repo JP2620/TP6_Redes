@@ -1,4 +1,4 @@
-version: '3.1'
+version: '2.1'
 
 services:
   r1:
@@ -17,10 +17,10 @@ services:
     networks:
       r1-dns:
         ipv4_address: 192.168.2.10
-      r1-ingress:
-        ipv4_address: 192.168.4.10
+        ipv6_address: 2001:AAAA::10
       r1-hosts:
-        ipv4_address: 192.168.3.10  
+        ipv4_address: 192.168.3.10 
+        ipv6_address: 2001:BBBB::10 
   
   root-dns:
     build: 
@@ -33,6 +33,7 @@ services:
     networks:
       r1-dns:
         ipv4_address: 192.168.2.11
+        ipv6_address: 2001:AAAA::11
 
   host1: 
     build:
@@ -43,24 +44,24 @@ services:
     command: tail -f /dev/null
     networks:
       r1-hosts:
-        ipv4_address: 192.168.3.12
+        ipv4_address: 192.168.3.13
+        ipv6_address: 2001:BBBB::13
 
 networks:
   r1-dns:      
     driver: bridge
+    enable_ipv6: true
     ipam:
       driver: default
       config:
       - subnet: 192.168.2.0/24
-  r1-ingress:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 192.168.4.0/24
+      - subnet: 2001:AAAA::0/64
+
   r1-hosts:
     driver: bridge
+    enable_ipv6: true
     ipam:
       driver: default
       config:
       - subnet: 192.168.3.0/24
+      - subnet: 2001:BBBB::0/64

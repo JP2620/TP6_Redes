@@ -21,3 +21,5 @@ sudo docker exec --privileged tp6redes_r1_1 ip -6 route del default
 #agregar ip address
 #VM con kubernetes: 
 #sudo ip -6 address add 2000:ffff::5/64 dev enp0s8
+#sudo ip route add 2001:bbbb::/64 via 2001:ffff::2 dev enp0s8
+#sudo ip route add 192.168.3.0/24 via 192.168.1.2 dev enp0s8

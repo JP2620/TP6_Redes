@@ -42,11 +42,12 @@ services:
       context: .
     volumes: 
       - ./volumes/resolv.conf:/etc/resolv.conf:ro
+      - ./volumes/redestp6-com.pem:/var/redestp6-com.pem:ro
     command: tail -f /dev/null
     networks:
       r1-hosts:
         ipv4_address: 192.168.3.12
-        ipv6_address: 2001:BBBB::13
+        ipv6_address: 2001:BBBB::12
 
 networks:
   r1-dns:      

@@ -1,4 +1,4 @@
-version: '3.1'
+version: '2.1'
 
 services:
   r1:
@@ -13,54 +13,68 @@ services:
       #admin
       - 10101:2601
       #ospf ipv4
-      - 10102:2604    
+      - 10102:2604
+    privileged: true 
     networks:
       r1-dns:
         ipv4_address: 192.168.2.10
-      r1-ingress:
-        ipv4_address: 192.168.1.10
+        ipv6_address: 2001:AAAA::10
       r1-hosts:
-        ipv4_address: 192.168.3.10  
+        ipv4_address: 192.168.3.10
+        ipv6_address: 2001:BBBB::10   
   
-#   root-dns:
-#     build: 
-#       dockerfile: images/dns.dockerfile
-#       context: .
-#     volumes:
-#       - ./bindconfig/nsroot/:/etc/bind:ro
-#     ports:
-#       - "10010:53/tcp"
-#     networks:
-#       r1-dns:
-#         ipv4_address: 192.168.2.11
+  root-dns:
+    build: 
+      dockerfile: images/dns.dockerfile
+      context: .
+    volumes:
+      - ./nsroot/:/etc/bind:ro
+    ports:
+      - "10010:53/tcp"
+    networks:
+      r1-dns:
+        ipv4_address: 192.168.2.11
+        ipv6_address: 2001:AAAA::11
 
   host1: 
     build:
       dockerfile: images/host.dockerfile
       context: .
     volumes: 
-      - ./volumes/resolv_com.conf:/etc/resolv.conf:ro
+      - ./volumes/resolv.conf:/etc/resolv.conf:ro
     command: tail -f /dev/null
     networks:
       r1-hosts:
         ipv4_address: 192.168.3.12
+        ipv6_address: 2001:BBBB::13
 
 networks:
   r1-dns:      
     driver: bridge
+    enable_ipv6: true
     ipam:
       driver: default
       config:
       - subnet: 192.168.2.0/24
-  r1-ingress:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 192.168.1.0/24
+      - subnet: 2001:AAAA::0/64
+
   r1-hosts:
     driver: bridge
+    enable_ipv6: true
     ipam:
       driver: default
       config:
       - subnet: 192.168.3.0/24
+      - subnet: 2001:BBBB::0/64
+
+  # pub-net:
+  #   driver: macvlan
+  #   driver_opts:
+  #     parent: enp0s8
+  #   enable_ipv6: true
+  #   ipam:
+  #     driver: default
+  #     config:
+  #     - subnet: 192.168.1.0/24
+  #     - subnet: 2001:FFFF::0/64  
+  

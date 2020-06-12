@@ -1,0 +1,20 @@
+#crear usuario, no olvidar darle permisos desde la web
+curl --cacert /var/redestp6-com.pem -X POST https://redestp6.com/auth/local/register -H 'Content-Type: application/json' -d '{"username": "","email": "", "password": ""}'
+
+#generar token para el usuario ubuntu
+
+curl --cacert /var/redestp6-com.pem -X POST https://redestp6.com/auth/local -H 'Content-Type: application/json' -d '{"identifier":"ubuntu","password":"ubuntu"}'
+
+#generar token para usuario siete
+
+curl --cacert /var/redestp6-com.pem -X POST https://redestp6.com/auth/local -H 'Content-Type: application/json' -d '{"identifier":"siete","password":"siete5555"}'
+
+
+# GET con ipv6
+curl -v --cacert /var/redestp6-com.pem -X GET https://redestp6.com/alumnos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZTEyMjg1MDQwZjUwMDA4OTVhNWE0MSIsImlhdCI6MTU5MTg5MDUzMCwiZXh
+wIjoxNTk0NDgyNTMwfQ.Ic6IbDhq3QPeu9eLzBPXAR0r0-4zdjZHl9J9TIwxvsU"
+
+
+# GET con ipv4
+curl -v --ipv4 --cacert /var/redestp6-com.pem -X GET https://redestp6.com/alumnos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZTEyMjg1MDQwZjUwMDA4OTVhNWE0MSIsImlhdCI6MTU5MTg5MDUz
+MCwiZXhwIjoxNTk0NDgyNTMwfQ.Ic6IbDhq3QPeu9eLzBPXAR0r0-4zdjZHl9J9TIwxvsU"
